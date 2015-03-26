@@ -15,6 +15,9 @@
 		93D9A51F1AC3426600A685D7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 93D9A51E1AC3426600A685D7 /* Images.xcassets */; };
 		93D9A5221AC3426600A685D7 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93D9A5201AC3426600A685D7 /* LaunchScreen.xib */; };
 		93D9A52E1AC3426600A685D7 /* Every_DoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D9A52D1AC3426600A685D7 /* Every_DoTests.m */; };
+		93D9A5391AC342DD00A685D7 /* Todo.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D9A5381AC342DD00A685D7 /* Todo.m */; };
+		93D9A53C1AC34F7D00A685D7 /* TodoItemTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D9A53B1AC34F7D00A685D7 /* TodoItemTableViewCell.m */; };
+		93D9A53F1AC372C700A685D7 /* AddObjectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D9A53E1AC372C700A685D7 /* AddObjectViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +46,12 @@
 		93D9A5271AC3426600A685D7 /* Every.DoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Every.DoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		93D9A52C1AC3426600A685D7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		93D9A52D1AC3426600A685D7 /* Every_DoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Every_DoTests.m; sourceTree = "<group>"; };
+		93D9A5371AC342DD00A685D7 /* Todo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Todo.h; path = ../Todo.h; sourceTree = "<group>"; };
+		93D9A5381AC342DD00A685D7 /* Todo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Todo.m; path = ../Todo.m; sourceTree = "<group>"; };
+		93D9A53A1AC34F7D00A685D7 /* TodoItemTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TodoItemTableViewCell.h; sourceTree = "<group>"; };
+		93D9A53B1AC34F7D00A685D7 /* TodoItemTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TodoItemTableViewCell.m; sourceTree = "<group>"; };
+		93D9A53D1AC372C700A685D7 /* AddObjectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddObjectViewController.h; path = ../AddObjectViewController.h; sourceTree = "<group>"; };
+		93D9A53E1AC372C700A685D7 /* AddObjectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AddObjectViewController.m; path = ../AddObjectViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,10 +95,16 @@
 			children = (
 				93D9A5121AC3426600A685D7 /* AppDelegate.h */,
 				93D9A5131AC3426600A685D7 /* AppDelegate.m */,
-				93D9A5151AC3426600A685D7 /* MasterViewController.h */,
-				93D9A5161AC3426600A685D7 /* MasterViewController.m */,
 				93D9A5181AC3426600A685D7 /* DetailViewController.h */,
 				93D9A5191AC3426600A685D7 /* DetailViewController.m */,
+				93D9A5371AC342DD00A685D7 /* Todo.h */,
+				93D9A5381AC342DD00A685D7 /* Todo.m */,
+				93D9A53D1AC372C700A685D7 /* AddObjectViewController.h */,
+				93D9A53E1AC372C700A685D7 /* AddObjectViewController.m */,
+				93D9A5151AC3426600A685D7 /* MasterViewController.h */,
+				93D9A5161AC3426600A685D7 /* MasterViewController.m */,
+				93D9A53A1AC34F7D00A685D7 /* TodoItemTableViewCell.h */,
+				93D9A53B1AC34F7D00A685D7 /* TodoItemTableViewCell.m */,
 				93D9A51B1AC3426600A685D7 /* Main.storyboard */,
 				93D9A51E1AC3426600A685D7 /* Images.xcassets */,
 				93D9A5201AC3426600A685D7 /* LaunchScreen.xib */,
@@ -224,6 +239,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				93D9A53C1AC34F7D00A685D7 /* TodoItemTableViewCell.m in Sources */,
+				93D9A53F1AC372C700A685D7 /* AddObjectViewController.m in Sources */,
+				93D9A5391AC342DD00A685D7 /* Todo.m in Sources */,
 				93D9A5141AC3426600A685D7 /* AppDelegate.m in Sources */,
 				93D9A5171AC3426600A685D7 /* MasterViewController.m in Sources */,
 				93D9A5111AC3426600A685D7 /* main.m in Sources */,

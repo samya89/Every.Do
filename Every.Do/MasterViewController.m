@@ -8,10 +8,14 @@
 
 #import "MasterViewController.h"
 #import "DetailViewController.h"
+#import "Todo.h"
+#import "TodoItemTableViewCell.h"
+#import "AddObjectViewController.h"
 
 @interface MasterViewController ()
 
-@property NSMutableArray *objects;
+@property (nonatomic) NSMutableArray *todoItems;
+@property (nonatomic) NSIndexPath *indexPath;
 @end
 
 @implementation MasterViewController
@@ -22,25 +26,50 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    Todo *object1 = [[Todo alloc] initWithTitle:@"Do dishes" withDetail:@"Unload  and load dishwasher" andPriority:1 andisCompleted:NO];
+    Todo *object2 = [[Todo alloc] initWithTitle:@"Do laundry" withDetail:@"Wash towels" andPriority:2 andisCompleted:NO];
+    Todo *object3 = [[Todo alloc] initWithTitle:@"Grocery shopping" withDetail:@"Buy fruits and vegetables" andPriority:3 andisCompleted:YES];
+    Todo *object4 = [[Todo alloc] initWithTitle:@"Clean up bedroom" withDetail:@"Make bed and put away clothes" andPriority:4 andisCompleted:YES];
+    
+    self.todoItems = [NSMutableArray arrayWithObjects:object1, object2, object3, object4, nil];
+    
     // Do any additional setup after loading the view, typically from a nib.
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
 
-    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
-    self.navigationItem.rightBarButtonItem = addButton;
+//    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
+//    self.navigationItem.rightBarButtonItem = addButton;
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+//    NSLog(@"%s",__func__);
+    [self.tableView reloadData];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+//    NSLog(@"%s",__func__);
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-- (void)insertNewObject:(id)sender {
-    if (!self.objects) {
-        self.objects = [[NSMutableArray alloc] init];
+- (Todo *)insertNewObject:(id)sender {
+    if (!self.todoItems) {
+        self.todoItems = [[NSMutableArray alloc] init];
     }
-    [self.objects insertObject:[NSDate date] atIndex:0];
+    
+
+    Todo *todoItem = [Todo new];
+    todoItem.title = @"New Todo Item";
+    todoItem.details = @"Details";
+    
+    [self.todoItems insertObject:todoItem atIndex:0];
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    return todoItem;
 }
 
 #pragma mark - Segues
@@ -48,8 +77,14 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([[segue identifier] isEqualToString:@"showDetail"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        NSDate *object = self.objects[indexPath.row];
+        Todo *object = self.todoItems[indexPath.row];
+        
+        
         [[segue destinationViewController] setDetailItem:object];
+    }else if ([[segue identifier] isEqualToString:@"editDetail"]) {
+        Todo *object = [self insertNewObject:self];
+        AddObjectViewController *addObjectVC = [segue destinationViewController];
+        addObjectVC.todoItem = object;
     }
 }
 
@@ -60,14 +95,31 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.objects.count;
+    return self.todoItems.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    TodoItemTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"todoItemCell" forIndexPath:indexPath];
 
-    NSDate *object = self.objects[indexPath.row];
-    cell.textLabel.text = [object description];
+    Todo *todoItem = self.todoItems[indexPath.row];
+    if (todoItem.isCompleted)
+    {
+        NSMutableAttributedString *struckText = [[NSMutableAttributedString alloc] initWithString:[todoItem title]];
+        
+        [struckText addAttribute:NSStrikethroughStyleAttributeName
+                                value:@(NSUnderlineStyleSingle)
+                                range:NSMakeRange(0, [struckText length])];
+        
+        cell.todoTitleLabel.attributedText = struckText;
+    }
+    else
+    {
+        cell.todoTitleLabel.text = [todoItem title];
+    }
+    
+    cell.descriptionLabel.text = [todoItem details];
+    cell.priorityLabel.text = [NSString stringWithFormat:@"#%d",todoItem.priorityNumber];
+    
     return cell;
 }
 
@@ -78,11 +130,41 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [self.objects removeObjectAtIndex:indexPath.row];
+        [self.todoItems removeObjectAtIndex:indexPath.row];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
     }
 }
+
+
+#pragma mark - Row reordering
+
+//Determine whether a given row is eligible for reordering or not.
+
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath
+{
+    NSString *stringToMove = self.todoItems[sourceIndexPath.row];
+    [self.todoItems removeObjectAtIndex:sourceIndexPath.row];
+    [self.todoItems insertObject:stringToMove atIndex:destinationIndexPath.row];
+}
+
+
+
+
+
+//-(NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
+//    
+//    
+//    return @[];
+//
+//}
+
+
+
 
 @end
