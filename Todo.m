@@ -22,5 +22,26 @@
     return self;
 }
 
+- (id)initWithCoder:(NSCoder *)decoder {
+    self = [super init];
+    if (!self) {
+        return nil;
+    }
+    
+    self.title = [decoder decodeObjectForKey:@"title"];
+    self.details = [decoder decodeObjectForKey:@"details"];
+    self.priorityNumber = [decoder decodeIntForKey:@"priorityNumber"];
+    self.isCompleted = [decoder decodeBoolForKey:@"isCompleted"];
+    
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)encoder {
+    [encoder encodeObject:self.title forKey:@"title"];
+    [encoder encodeObject:self.details forKey:@"details"];
+    [encoder encodeInt:self.priorityNumber forKey:@"priorityNumber"];
+    [encoder encodeBool:self.isCompleted forKey:@"isCompleted"];
+}
+
 
 @end

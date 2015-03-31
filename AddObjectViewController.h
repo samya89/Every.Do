@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+@class MasterViewController;
 #import "Todo.h"
+#import "AddObjectVCDelegate.h"
 
 @interface AddObjectViewController : UIViewController
 
@@ -19,9 +21,20 @@
 @property (nonatomic) NSString *detailsInput;
 @property (nonatomic) NSString *priorityInput;
 
+@property (weak, nonatomic) id<AddObjectVCDelegate> delegate;
+
 @property (nonatomic,strong) Todo *todoItem;
 
 - (IBAction)done;
+
+- (IBAction)titleChangedText:(UITextField *)sender;
+
+- (IBAction)detailsChangedText:(UITextField *)sender;
+
+- (IBAction)priorityChangedText:(UITextField *)sender;
+
+
+
 
 
 @end

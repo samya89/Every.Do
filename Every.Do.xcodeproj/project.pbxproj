@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		93D3064E1ACA4094007F186F /* Archiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D3064D1ACA4094007F186F /* Archiver.m */; };
 		93D9A5111AC3426600A685D7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D9A5101AC3426600A685D7 /* main.m */; };
 		93D9A5141AC3426600A685D7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D9A5131AC3426600A685D7 /* AppDelegate.m */; };
 		93D9A5171AC3426600A685D7 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D9A5161AC3426600A685D7 /* MasterViewController.m */; };
@@ -31,6 +32,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		93D3064B1ACA09C3007F186F /* AddObjectVCDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddObjectVCDelegate.h; sourceTree = "<group>"; };
+		93D3064C1ACA4094007F186F /* Archiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Archiver.h; sourceTree = "<group>"; };
+		93D3064D1ACA4094007F186F /* Archiver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Archiver.m; sourceTree = "<group>"; };
 		93D9A50B1AC3426600A685D7 /* Every.Do.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Every.Do.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		93D9A50F1AC3426600A685D7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		93D9A5101AC3426600A685D7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -97,10 +101,13 @@
 				93D9A5131AC3426600A685D7 /* AppDelegate.m */,
 				93D9A5181AC3426600A685D7 /* DetailViewController.h */,
 				93D9A5191AC3426600A685D7 /* DetailViewController.m */,
+				93D3064B1ACA09C3007F186F /* AddObjectVCDelegate.h */,
 				93D9A5371AC342DD00A685D7 /* Todo.h */,
 				93D9A5381AC342DD00A685D7 /* Todo.m */,
 				93D9A53D1AC372C700A685D7 /* AddObjectViewController.h */,
 				93D9A53E1AC372C700A685D7 /* AddObjectViewController.m */,
+				93D3064C1ACA4094007F186F /* Archiver.h */,
+				93D3064D1ACA4094007F186F /* Archiver.m */,
 				93D9A5151AC3426600A685D7 /* MasterViewController.h */,
 				93D9A5161AC3426600A685D7 /* MasterViewController.m */,
 				93D9A53A1AC34F7D00A685D7 /* TodoItemTableViewCell.h */,
@@ -243,6 +250,7 @@
 				93D9A53F1AC372C700A685D7 /* AddObjectViewController.m in Sources */,
 				93D9A5391AC342DD00A685D7 /* Todo.m in Sources */,
 				93D9A5141AC3426600A685D7 /* AppDelegate.m in Sources */,
+				93D3064E1ACA4094007F186F /* Archiver.m in Sources */,
 				93D9A5171AC3426600A685D7 /* MasterViewController.m in Sources */,
 				93D9A5111AC3426600A685D7 /* main.m in Sources */,
 				93D9A51A1AC3426600A685D7 /* DetailViewController.m in Sources */,
@@ -368,6 +376,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Every.Do/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -378,6 +387,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Every.Do/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -436,6 +446,7 @@
 				93D9A5331AC3426600A685D7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		93D9A5341AC3426600A685D7 /* Build configuration list for PBXNativeTarget "Every.DoTests" */ = {
 			isa = XCConfigurationList;
@@ -444,6 +455,7 @@
 				93D9A5361AC3426600A685D7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -16,9 +16,14 @@
 
 @property (nonatomic) NSMutableArray *todoItems;
 @property (nonatomic) NSIndexPath *indexPath;
+
 @end
 
 @implementation MasterViewController
+
+- (void)save {
+    [NSKeyedArchiver archiveRootObject:self.todoItems toFile:[self getFilePath]];
+}
 
 - (void)awakeFromNib {
     [super awakeFromNib];
@@ -27,15 +32,22 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    Todo *object1 = [[Todo alloc] initWithTitle:@"Do dishes" withDetail:@"Unload  and load dishwasher" andPriority:1 andisCompleted:NO];
-    Todo *object2 = [[Todo alloc] initWithTitle:@"Do laundry" withDetail:@"Wash towels" andPriority:2 andisCompleted:NO];
-    Todo *object3 = [[Todo alloc] initWithTitle:@"Grocery shopping" withDetail:@"Buy fruits and vegetables" andPriority:3 andisCompleted:YES];
-    Todo *object4 = [[Todo alloc] initWithTitle:@"Clean up bedroom" withDetail:@"Make bed and put away clothes" andPriority:4 andisCompleted:YES];
+    NSArray *todoItems = [NSKeyedUnarchiver unarchiveObjectWithFile:[self getFilePath]];
+    if (todoItems) {
+        self.todoItems = [todoItems mutableCopy];
+    }
     
-    self.todoItems = [NSMutableArray arrayWithObjects:object1, object2, object3, object4, nil];
+    self.navigationItem.leftBarButtonItem = self.editButtonItem;
+
+    
+//    Todo *object1 = [[Todo alloc] initWithTitle:@"Do dishes" withDetail:@"Unload  and load dishwasher" andPriority:1 andisCompleted:NO];
+//    Todo *object2 = [[Todo alloc] initWithTitle:@"Do laundry" withDetail:@"Wash towels" andPriority:2 andisCompleted:NO];
+//    Todo *object3 = [[Todo alloc] initWithTitle:@"Grocery shopping" withDetail:@"Buy fruits and vegetables" andPriority:3 andisCompleted:YES];
+//    Todo *object4 = [[Todo alloc] initWithTitle:@"Clean up bedroom" withDetail:@"Make bed and put away clothes" andPriority:4 andisCompleted:YES];
+    
+//    self.todoItems = [NSMutableArray arrayWithObjects:object1, object2, object3, object4, nil];
     
     // Do any additional setup after loading the view, typically from a nib.
-    self.navigationItem.leftBarButtonItem = self.editButtonItem;
 
 //    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
 //    self.navigationItem.rightBarButtonItem = addButton;
@@ -44,7 +56,11 @@
 - (void)viewWillAppear:(BOOL)animated
 {
 //    NSLog(@"%s",__func__);
+    [super viewWillAppear:animated];
+        
     [self.tableView reloadData];
+//    [NSKeyedArchiver archiveRootObject:self.todoItems toFile:[self getFilePath]];
+
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -72,6 +88,12 @@
     return todoItem;
 }
 
+- (NSString*)getFilePath{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectoryPath = [paths objectAtIndex:0];
+    return [documentsDirectoryPath stringByAppendingPathComponent:@"appData"];
+}
+
 #pragma mark - Segues
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -84,6 +106,7 @@
         Todo *object = [self insertNewObject:self];
         AddObjectViewController *addObjectVC = [segue destinationViewController];
         addObjectVC.todoItem = object;
+        addObjectVC.delegate = self;
     }
 }
 
@@ -128,12 +151,14 @@
 //}
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-//    if (editingStyle == UITableViewCellEditingStyleDelete) {
-//        [self.todoItems removeObjectAtIndex:indexPath.row];
-//        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-//    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-//        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
-//    }
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        [self.todoItems removeObjectAtIndex:indexPath.row];
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        [NSKeyedArchiver archiveRootObject:self.todoItems toFile:[self getFilePath]];
+
+    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
+        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
+    }
 }
 
 
@@ -187,14 +212,25 @@
         return @[deleteAction, rowActionComplete];
     }
 }
-
-    
-    
-    
-
-
-
-
-
+//
+//- (IBAction)saveTasks:(id)sender {
+//    [NSKeyedArchiver archiveRootObject:self.todoItems toFile:[self getFilePath]];
+//    [self.tableView reloadData];
+//}
 
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

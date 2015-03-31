@@ -7,8 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AddObjectVCDelegate.h"
 
-@interface MasterViewController : UITableViewController
+@interface MasterViewController : UITableViewController <AddObjectVCDelegate>
+
+//- (IBAction)saveTasks:(id)sender;
+
+
 
 
 @end

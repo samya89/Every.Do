@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="rS3-R9-Ivy">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -95,7 +96,8 @@
                             <outlet property="delegate" destination="pGg-6v-bdr" id="Y6K-Cp-Qkv"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="My ToDo" id="tQt-TN-PWz">
+                    <navigationItem key="navigationItem" id="tQt-TN-PWz">
+                        <nil key="title"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="OwZ-cJ-Z6r">
                             <connections>
                                 <segue destination="Qfh-PL-bSP" kind="presentation" identifier="editDetail" id="uP2-o9-81d"/>
@@ -128,6 +130,9 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="titleChangedText:" destination="Qfh-PL-bSP" eventType="editingChanged" id="2ph-WT-NAv"/>
+                                </connections>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Priority No." minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hxX-Us-e8o">
                                 <rect key="frame" x="68" y="215" width="94" height="30"/>
@@ -137,6 +142,9 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                <connections>
+                                    <action selector="priorityChangedText:" destination="Qfh-PL-bSP" eventType="editingChanged" id="rSs-fa-f9I"/>
+                                </connections>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Details" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ryl-fg-wbc">
                                 <rect key="frame" x="68" y="143" width="516" height="30"/>
@@ -146,9 +154,12 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="detailsChangedText:" destination="Qfh-PL-bSP" eventType="editingChanged" id="sLm-5H-bhx"/>
+                                </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ljM-dB-YIY">
-                                <rect key="frame" x="68" y="279" width="46" height="30"/>
+                                <rect key="frame" x="217" y="215" width="46" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="46" id="UHe-hn-oNb"/>
                                     <constraint firstAttribute="height" constant="30" id="o3W-XF-Et0"/>
@@ -166,11 +177,11 @@
                             <constraint firstItem="Psf-dE-BgN" firstAttribute="top" secondItem="51k-do-FeZ" secondAttribute="bottom" constant="56" id="1lA-HK-Jzd"/>
                             <constraint firstItem="hxX-Us-e8o" firstAttribute="top" secondItem="ryl-fg-wbc" secondAttribute="bottom" constant="42" id="ENx-H8-dRC"/>
                             <constraint firstItem="ryl-fg-wbc" firstAttribute="leading" secondItem="gqZ-jq-CIQ" secondAttribute="leadingMargin" constant="52" id="GSx-xw-djw"/>
-                            <constraint firstItem="ljM-dB-YIY" firstAttribute="top" secondItem="hxX-Us-e8o" secondAttribute="bottom" constant="34" id="GZX-r6-wHD"/>
+                            <constraint firstItem="ljM-dB-YIY" firstAttribute="top" secondItem="hxX-Us-e8o" secondAttribute="bottom" constant="-30" id="GZX-r6-wHD"/>
                             <constraint firstItem="hxX-Us-e8o" firstAttribute="leading" secondItem="gqZ-jq-CIQ" secondAttribute="leadingMargin" constant="52" id="Ie3-gy-kAb"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="ljM-dB-YIY" secondAttribute="trailing" constant="470" id="IqB-On-rgs"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="ljM-dB-YIY" secondAttribute="trailing" constant="321" id="IqB-On-rgs"/>
                             <constraint firstAttribute="trailingMargin" secondItem="hxX-Us-e8o" secondAttribute="trailing" constant="422" id="QCc-w8-rmN"/>
-                            <constraint firstItem="ljM-dB-YIY" firstAttribute="leading" secondItem="gqZ-jq-CIQ" secondAttribute="leadingMargin" constant="52" id="R7M-dj-qWz"/>
+                            <constraint firstItem="ljM-dB-YIY" firstAttribute="leading" secondItem="gqZ-jq-CIQ" secondAttribute="leadingMargin" constant="201" id="R7M-dj-qWz"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Psf-dE-BgN" secondAttribute="trailing" constant="162" id="dKI-Hk-xiT"/>
                             <constraint firstItem="ryl-fg-wbc" firstAttribute="trailing" secondItem="gqZ-jq-CIQ" secondAttribute="trailingMargin" id="h9Y-jL-Ib4"/>
                             <constraint firstItem="ryl-fg-wbc" firstAttribute="top" secondItem="Psf-dE-BgN" secondAttribute="bottom" constant="37" id="hQs-O5-C6e"/>
