@@ -6,8 +6,10 @@
 //  Copyright (c) 2015 Samia Al Rahmani. All rights reserved.
 //
 
+@class Todo;
+
 @protocol AddObjectVCDelegate <NSObject>
 
-- (void)save;
+- (void)addTask:(Todo *)task;
 
 @end

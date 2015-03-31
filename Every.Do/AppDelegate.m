@@ -17,7 +17,7 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    NSDictionary *toDoDefaults = @{@"defaultTask":@{@"title":@"Laundry", @"details":@"Wash towels", @"priorityNumber":@"1"}};
+    NSDictionary *toDoDefaults = @{@"defaultTask":@{@"title":@"Laundry", @"details":@"Wash towels", @"priorityNumber":@1}};
     [[NSUserDefaults standardUserDefaults] registerDefaults:toDoDefaults];
     
     [[NSUserDefaults standardUserDefaults] synchronize];

@@ -11,6 +11,7 @@
 #import "Todo.h"
 #import "TodoItemTableViewCell.h"
 #import "AddObjectViewController.h"
+#import "Archiver.h"
 
 @interface MasterViewController ()
 
@@ -21,10 +22,6 @@
 
 @implementation MasterViewController
 
-- (void)save {
-    [NSKeyedArchiver archiveRootObject:self.todoItems toFile:[self getFilePath]];
-}
-
 - (void)awakeFromNib {
     [super awakeFromNib];
 }
@@ -32,66 +29,22 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    NSArray *todoItems = [NSKeyedUnarchiver unarchiveObjectWithFile:[self getFilePath]];
-    if (todoItems) {
-        self.todoItems = [todoItems mutableCopy];
-    }
-    
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
-
-    
-//    Todo *object1 = [[Todo alloc] initWithTitle:@"Do dishes" withDetail:@"Unload  and load dishwasher" andPriority:1 andisCompleted:NO];
-//    Todo *object2 = [[Todo alloc] initWithTitle:@"Do laundry" withDetail:@"Wash towels" andPriority:2 andisCompleted:NO];
-//    Todo *object3 = [[Todo alloc] initWithTitle:@"Grocery shopping" withDetail:@"Buy fruits and vegetables" andPriority:3 andisCompleted:YES];
-//    Todo *object4 = [[Todo alloc] initWithTitle:@"Clean up bedroom" withDetail:@"Make bed and put away clothes" andPriority:4 andisCompleted:YES];
-    
-//    self.todoItems = [NSMutableArray arrayWithObjects:object1, object2, object3, object4, nil];
-    
-    // Do any additional setup after loading the view, typically from a nib.
-
-//    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
-//    self.navigationItem.rightBarButtonItem = addButton;
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-//    NSLog(@"%s",__func__);
-    [super viewWillAppear:animated];
-        
-    [self.tableView reloadData];
-//    [NSKeyedArchiver archiveRootObject:self.todoItems toFile:[self getFilePath]];
-
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-//    NSLog(@"%s",__func__);
-}
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-- (Todo *)insertNewObject:(id)sender {
-    if (!self.todoItems) {
-        self.todoItems = [[NSMutableArray alloc] init];
+    NSMutableArray *savedItems = [[Archiver loadTasks] mutableCopy];
+    if (savedItems != nil){
+        self.todoItems = savedItems;
+    }else {
+        self.todoItems = [NSMutableArray new];
     }
-    
 
-    Todo *todoItem = [Todo new];
-    todoItem.title = @"New Todo Item";
-    todoItem.details = @"Details";
-    
-    [self.todoItems insertObject:todoItem atIndex:0];
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-    [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-    return todoItem;
+    [self.tableView reloadData];
 }
 
-- (NSString*)getFilePath{
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectoryPath = [paths objectAtIndex:0];
-    return [documentsDirectoryPath stringByAppendingPathComponent:@"appData"];
+#pragma mark - AddObjectVCDelegate
+
+- (void)addTask:(Todo *)task{
+    [self.todoItems addObject:task];
+    [self.tableView reloadData];
 }
 
 #pragma mark - Segues
@@ -103,9 +56,7 @@
         
         [[segue destinationViewController] setDetailItem:object];
     }else if ([[segue identifier] isEqualToString:@"editDetail"]) {
-        Todo *object = [self insertNewObject:self];
         AddObjectViewController *addObjectVC = [segue destinationViewController];
-        addObjectVC.todoItem = object;
         addObjectVC.delegate = self;
     }
 }
@@ -154,8 +105,8 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         [self.todoItems removeObjectAtIndex:indexPath.row];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-        [NSKeyedArchiver archiveRootObject:self.todoItems toFile:[self getFilePath]];
-
+        [self saveTasks];
+        
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
     }
@@ -211,6 +162,10 @@
     else {
         return @[deleteAction, rowActionComplete];
     }
+}
+
+- (void)saveTasks {
+    [Archiver saveTasks:self.todoItems.copy];
 }
 //
 //- (IBAction)saveTasks:(id)sender {

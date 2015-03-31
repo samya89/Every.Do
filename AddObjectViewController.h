@@ -26,6 +26,7 @@
 @property (nonatomic,strong) Todo *todoItem;
 
 - (IBAction)done;
+- (IBAction)cancel:(id)sender;
 
 - (IBAction)titleChangedText:(UITextField *)sender;
 

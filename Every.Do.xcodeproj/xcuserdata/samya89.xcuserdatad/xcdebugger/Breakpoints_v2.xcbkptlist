@@ -20,11 +20,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Every.Do/MasterViewController.m"
-            timestampString = "449452629.117752"
+            timestampString = "449467654.720346"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "201"
-            endingLineNumber = "201"
+            startingLineNumber = "152"
+            endingLineNumber = "152"
             landmarkName = "-tableView:editActionsForRowAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>

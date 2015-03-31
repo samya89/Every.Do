@@ -11,6 +11,7 @@
 
 @interface Archiver : NSObject
 
++ (void)saveTask:(Todo *)task;
 + (void)saveTasks:(NSArray *)taskArray;
 + (NSArray *)loadTasks;
 + (void)deleteTask:(Todo *)task;

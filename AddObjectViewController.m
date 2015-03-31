@@ -8,6 +8,7 @@
 
 #import "AddObjectViewController.h"
 #import "MasterViewController.h"
+#import "Archiver.h"
 
 
 @interface AddObjectViewController ()
@@ -21,70 +22,49 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    NSDictionary *defaultTask = [[NSUserDefaults standardUserDefaults] dictionaryForKey:@"defaultTask"];
-    NSString *defaultTitle = defaultTask[@"title"];
-    NSString *defaultDetails = defaultTask[@"details"];
-    NSString *defaultPriority = defaultTask[@"priorityNumber"];
     
-    self.addTitleTextField.text = defaultTitle;
-    self.addDetailsTextField.text = defaultDetails;
-    self.addPriorityTextField.text = defaultPriority;
-    
-    NSArray *draftInput = [NSKeyedUnarchiver unarchiveObjectWithFile:[self getFilePath]];
-    if (draftInput) {
-        self.todoItem = [draftInput mutableCopy];
+    Todo *draft = [Archiver loadDraft];
+    if (draft != nil){
+        self.draftTask = draft;
+    } else {
+        NSDictionary *defaultTask = [[NSUserDefaults standardUserDefaults] dictionaryForKey:@"defaultTask"];
+        self.draftTask = [Todo new];
+        self.draftTask.title = defaultTask[@"title"];
+        self.draftTask.details = defaultTask[@"details"];
+        self.draftTask.priorityNumber = [defaultTask[@"priorityNumber"] intValue];
     }
     
+    self.addTitleTextField.text = self.draftTask.title;
+    self.addDetailsTextField.text = self.draftTask.details;
+    self.addPriorityTextField.text = [NSString stringWithFormat:@"%@", @(self.draftTask.priorityNumber)];
 }
-
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-  
-    
-//    self.addTitleTextField.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"TitleToSave"];
-
-
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-- (NSString*)getFilePath{
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectoryPath = [paths objectAtIndex:0];
-    return [documentsDirectoryPath stringByAppendingPathComponent:@"appData"];
-}
-
 
 - (IBAction)done{
-    self.todoItem.title = self.addTitleTextField.text;
-    self.todoItem.details = self.addDetailsTextField.text;
-    self.todoItem.priorityNumber = [self.addPriorityTextField.text intValue];
-    
-    [self.delegate save];
+    [Archiver saveTask:self.draftTask];
+    [Archiver deleteDraft];
+    [self.delegate addTask:self.draftTask];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (IBAction)cancel:(id)sender {
+    [Archiver deleteDraft];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+
 - (IBAction)titleChangedText:(UITextField *)sender {
-//    self.draftTask.title = self.addTitleTextField.text;
-//    [NSKeyedArchiver archiveRootObject:self.todoItem toFile:[self getFilePath]];
+    self.draftTask.title = self.addTitleTextField.text;
+    [Archiver saveDraft:self.draftTask];
 }
 
 - (IBAction)detailsChangedText:(UITextField *)sender {
-
+    self.draftTask.details = self.addDetailsTextField.text;
+    [Archiver saveDraft:self.draftTask];
 }
 
 - (IBAction)priorityChangedText:(UITextField *)sender {
-    
-    
-    
-//    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-//    [prefs setObject:@"PriorityToSave" forKey:@"priorityInput"];
-//    [prefs synchronize];
+    self.draftTask.priorityNumber = [self.addPriorityTextField.text intValue];
+    [Archiver saveDraft:self.draftTask];
 }
 
 

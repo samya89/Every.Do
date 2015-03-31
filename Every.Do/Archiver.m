@@ -23,6 +23,12 @@
     return [documentsDirectoryPath stringByAppendingPathComponent:@"drafts"];
 }
 
++ (void)saveTask:(Todo *)task{
+    NSMutableArray *tasks = [[self loadTasks] mutableCopy];
+    [tasks addObject:task];
+    [self saveTasks:tasks];
+}
+
 + (void)saveTasks:(NSArray *)taskArray{
     [NSKeyedArchiver archiveRootObject:taskArray toFile:[self taskFilePath]];
 }
@@ -32,9 +38,9 @@
 }
 
 + (void)deleteTask:(Todo *)task{
-    NSMutableArray *tasks = [[self loadtasks] mutableCopy];
+    NSMutableArray *tasks = [[self loadTasks] mutableCopy];
     [tasks removeObject:task];
-    [self savetasks:tasks];
+    [self saveTasks:tasks];
 }
 
 + (void)saveDraft:(Todo *)task{
